@@ -1,2 +1,2 @@
-# Data_Angineering_Azure
+# Data_Engineering_Azure
 Data Eningeering Project on Azure
