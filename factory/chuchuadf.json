@@ -1,0 +1,9 @@
+{
+	"name": "chuchuadf",
+	"location": "uksouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "a2ab0441-0b2a-4209-899e-e9b0d728d9ed",
+		"tenantId": "cd6683a6-aa85-46cf-aeea-92d4a1477009"
+	}
+}

@@ -1,0 +1,62 @@
+{
+	"name": "Load Emp Data",
+	"properties": {
+		"description": "Loads NYC employee data from azure data lake to synapse analytics sql pool table",
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "empMaster_dataset_adls",
+						"type": "DatasetReference"
+					},
+					"name": "EmpDataSource",
+					"description": "Employee dataset in azure data lake storage"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "NYC_payroll_emp_dataset_synapse",
+						"type": "DatasetReference"
+					},
+					"name": "EmpDataSink",
+					"description": "Sink Emp data in Synpase analytics"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          EmployeeID as string,",
+				"          LastName as string,",
+				"          FirstName as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> EmpDataSource",
+				"EmpDataSource sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          EmployeeID as string,",
+				"          LastName as string,",
+				"          FirstName as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     staged: true,",
+				"     allowCopyCommand: true,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          EmployeeID,",
+				"          LastName,",
+				"          FirstName",
+				"     )) ~> EmpDataSink"
+			]
+		}
+	}
+}
